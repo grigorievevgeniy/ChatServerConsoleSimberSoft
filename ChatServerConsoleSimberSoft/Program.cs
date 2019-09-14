@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Hosting;
+﻿using ChatServerConsoleSimberSoft.Models;
+using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,14 @@ namespace ChatServerConsoleSimberSoft
     {
         static void Main(string[] args)
         {
+            List<User> users = new List<User>();
+            List<Message> messages = new List<Message>();
+
+
             string url = @"http://localhost:8080/";
             using (WebApp.Start<Startup>(url))
             {
-                Console.WriteLine(string.Format("Server running at {0}", url));
+                Console.WriteLine(string.Format("Сервер запущен {0}", url));
                 Console.ReadLine();
             }
         }
