@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ChatServerConsoleSimberSoft
 {
-    [HubName("TestHub")]
-    public class TestHub : Hub
+    [HubName("MessageHub")]
+    public class MessageHub : Hub
     {
-        public void SameMetod(string user, string message)
+        public void SendMessage(string user, string message)
         {
             Console.WriteLine(message);
 
