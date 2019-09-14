@@ -11,12 +11,12 @@ namespace ChatServerConsoleSimberSoft
     [HubName("TestHub")]
     public class TestHub : Hub
     {
-        public void SameMetod(string message)
+        public void SameMetod(string user, string message)
         {
             Console.WriteLine(message);
 
-            string newMessage = string.Format(@"{0} has a length of: {1}", message, message.Length);
-            Clients.All.ReceiveLength(newMessage);
+            string FullMessage = string.Format(user + ": " + message);
+            Clients.All.ReceiveLength(FullMessage);
         }
     }
 }
