@@ -29,21 +29,34 @@ namespace ChatServerConsoleSimberSoft
 
         }
 
+        // TODO доделать метод коннект
         public void Connect(string userName)
         {
             var id = Context.ConnectionId;
 
-
-            if (!Users.Any(x => x.ConnectionId == id))
+            if (!Users.Any(x => x.Login == userName))
             {
                 Users.Add(new User { ConnectionId = id, Login = userName });
 
                 // Посылаем сообщение текущему пользователю
-                Clients.Caller.onConnected(id, userName, Users);
+                Clients.Caller.ReceiveLength(AllOldMessage());
+                // TODO Нужен метод на клиента
+                //Clients.Caller.onConnected(id, userName, Users);
 
                 // Посылаем сообщение всем пользователям, кроме текущего
-                Clients.AllExcept(id).onNewUserConnected(id, userName);
+                // TODO Нужен метод на клиента
+                //Clients.AllExcept(id).onNewUserConnected(id, userName);
             }
+        }
+
+        private string AllOldMessage()
+        {
+            string allOldMessage = "---  Старые сообщения  ---";
+            for (int i = Messages.Count - 1; i >= 0; i--)
+            {
+                allOldMessage += "\r\n" + Messages[i].UserName + ": " + Messages[i].Text;
+            }
+            return allOldMessage;
         }
     }
 }
