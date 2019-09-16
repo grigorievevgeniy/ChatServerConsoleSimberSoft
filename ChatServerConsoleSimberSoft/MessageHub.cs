@@ -51,12 +51,19 @@ namespace ChatServerConsoleSimberSoft
 
         private string AllOldMessage()
         {
-            string allOldMessage = "---  Старые сообщения  ---";
-            for (int i = Messages.Count - 1; i >= 0; i--)
+            if (Messages.Count == 0)
             {
-                allOldMessage += "\r\n" + Messages[i].UserName + ": " + Messages[i].Text;
+                return "Старых сообщений нет";
             }
-            return allOldMessage;
+            else
+            {
+                string allOldMessage = "---  Старые сообщения  ---";
+                for (int i = Messages.Count - 1; i >= 0; i--)
+                {
+                    allOldMessage += "\r\n" + Messages[i].UserName + ": " + Messages[i].Text;
+                }
+                return allOldMessage;
+            }
         }
     }
 }
