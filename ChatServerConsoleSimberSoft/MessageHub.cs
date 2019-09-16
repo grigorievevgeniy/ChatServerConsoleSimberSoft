@@ -22,10 +22,8 @@ namespace ChatServerConsoleSimberSoft
             string FullMessage = string.Format(user + ": " + message);
             Clients.All.ReceiveLength(FullMessage);
 
-            Messages.Add(new Message { Text = FullMessage, Time = DateTime.Now, UserName = user });
-
-            // Сначала надо реализовать добавление пользователей.
-            //Messages.Add(new Message { Text = message, Time = DateTime.Now, User = Users.Single(x => x.Login == user) });
+            // Добавление сообщений в архив
+            Messages.Add(new Message { Text = message, Time = DateTime.Now, User = Users.Single(x => x.Login == user) });
 
         }
 
@@ -39,17 +37,15 @@ namespace ChatServerConsoleSimberSoft
                 Users.Add(new User { ConnectionId = id, Login = userName });
 
                 // Посылаем сообщение текущему пользователю
-                Clients.Caller.ReceiveLength(AllOldMessage());
-                // TODO Нужен метод на клиента
-                Clients.Caller.onConnected(id, userName, Users);
+                Clients.Caller.ReceiveLength(GetAllOldMessage());
+                Clients.Caller.ReceiveLength(userName + ", Вы присоединились к чату");
 
                 // Посылаем сообщение всем пользователям, кроме текущего
-                // TODO Нужен метод на клиента
-                //Clients.AllExcept(id).onNewUserConnected(id, userName);
+                Clients.AllExcept(id).ReceiveLength("К нам присоединился " + userName);
             }
         }
 
-        private string AllOldMessage()
+        private string GetAllOldMessage()
         {
             if (Messages.Count == 0)
             {
@@ -60,7 +56,7 @@ namespace ChatServerConsoleSimberSoft
                 string allOldMessage = "***  Старые сообщения  ***";
                 for (int i = Messages.Count - 1; i >= 0; i--)
                 {
-                    allOldMessage += "\r\n" + Messages[i].UserName + ": " + Messages[i].Text;
+                    allOldMessage += "\r\n" + Messages[i].User.Login + ": " + Messages[i].Text;
                 }
                 return allOldMessage;
             }
