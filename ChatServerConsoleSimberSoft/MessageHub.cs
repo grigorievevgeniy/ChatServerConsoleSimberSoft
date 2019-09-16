@@ -41,7 +41,7 @@ namespace ChatServerConsoleSimberSoft
                 // Посылаем сообщение текущему пользователю
                 Clients.Caller.ReceiveLength(AllOldMessage());
                 // TODO Нужен метод на клиента
-                //Clients.Caller.onConnected(id, userName, Users);
+                Clients.Caller.onConnected(id, userName, Users);
 
                 // Посылаем сообщение всем пользователям, кроме текущего
                 // TODO Нужен метод на клиента
@@ -53,11 +53,11 @@ namespace ChatServerConsoleSimberSoft
         {
             if (Messages.Count == 0)
             {
-                return "Старых сообщений нет";
+                return "*** Старых сообщений нет ***";
             }
             else
             {
-                string allOldMessage = "---  Старые сообщения  ---";
+                string allOldMessage = "***  Старые сообщения  ***";
                 for (int i = Messages.Count - 1; i >= 0; i--)
                 {
                     allOldMessage += "\r\n" + Messages[i].UserName + ": " + Messages[i].Text;
